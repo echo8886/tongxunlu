@@ -1,0 +1,64 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h2>编辑联系人</h2>
+<form method="POST">
+    <div class="mb-3">
+        <label class="form-label">姓名</label>
+        <input type="text" name="name" class="form-control" required value="{{ contact.name }}">
+    </div>
+
+    <div class="mb-3">
+        <label class="form-label">电话号码</label>
+        <div id="phone-inputs">
+            {% for phone in phones %}
+                <input type="tel" name="phone" class="form-control mb-2" value="{{ phone }}">
+            {% endfor %}
+            {% if not phones %}
+                <input type="tel" name="phone" class="form-control mb-2">
+            {% endif %}
+        </div>
+        <button type="button" class="btn btn-sm btn-secondary" onclick="addInput('phone-inputs', 'phone')">添加更多电话</button>
+    </div>
+
+    <div class="mb-3">
+        <label class="form-label">邮箱</label>
+        <div id="email-inputs">
+            {% for email in emails %}
+                <input type="email" name="email" class="form-control mb-2" value="{{ email }}">
+            {% endfor %}
+            {% if not emails %}
+                <input type="email" name="email" class="form-control mb-2">
+            {% endif %}
+        </div>
+        <button type="button" class="btn btn-sm btn-secondary" onclick="addInput('email-inputs', 'email')">添加更多邮箱</button>
+    </div>
+
+    <div class="mb-3">
+        <label class="form-label">地址</label>
+        <div id="address-inputs">
+            {% for address in addresses %}
+                <input type="text" name="address" class="form-control mb-2" value="{{ address }}">
+            {% endfor %}
+            {% if not addresses %}
+                <input type="text" name="address" class="form-control mb-2">
+            {% endif %}
+        </div>
+        <button type="button" class="btn btn-sm btn-secondary" onclick="addInput('address-inputs', 'address')">添加更多地址</button>
+    </div>
+
+    <button type="submit" class="btn btn-primary">保存</button>
+    <a href="{{ url_for('index') }}" class="btn btn-secondary">取消</a>
+</form>
+
+<script>
+function addInput(containerId, inputName) {
+    const container = document.getElementById(containerId);
+    const input = document.createElement('input');
+    input.type = inputName === 'email' ? 'email' : 'text';
+    input.name = inputName;
+    input.className = 'form-control mb-2';
+    container.appendChild(input);
+}
+</script>
+{% endblock %} 

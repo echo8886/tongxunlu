@@ -1,0 +1,70 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h2>联系人列表</h2>
+
+<!-- 添加搜索框 -->
+<form class="mb-4" method="GET">
+    <div class="input-group">
+        <input type="text" class="form-control" name="search" placeholder="搜索联系人..." value="{{ search }}">
+        <button class="btn btn-primary" type="submit">搜索</button>
+        {% if search %}
+            <a href="{{ url_for('index') }}" class="btn btn-secondary">清除</a>
+        {% endif %}
+    </div>
+</form>
+
+<div class="table-responsive">
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>姓名</th>
+                <th>电话</th>
+                <th>邮箱</th>
+                <th>地址</th>
+                <th>操作</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for contact in contacts %}
+            <tr>
+                <td>
+                    {{ contact.name }}
+                    {% if contact.is_bookmarked %}
+                        <span class="text-warning">★</span>
+                    {% endif %}
+                </td>
+                <td>
+                    {% for detail in contact.contact_details if detail.detail_type == 'phone' %}
+                        {{ detail.value }}<br>
+                    {% endfor %}
+                </td>
+                <td>
+                    {% for detail in contact.contact_details if detail.detail_type == 'email' %}
+                        {{ detail.value }}<br>
+                    {% endfor %}
+                </td>
+                <td>
+                    {% for detail in contact.contact_details if detail.detail_type == 'address' %}
+                        {{ detail.value }}<br>
+                    {% endfor %}
+                </td>
+                <td>
+                    <a href="{{ url_for('edit_contact', contact_id=contact.id) }}" class="btn btn-sm btn-primary">
+                        编辑
+                    </a>
+                    <a href="{{ url_for('toggle_bookmark', contact_id=contact.id) }}" class="btn btn-sm btn-warning">
+                        {% if contact.is_bookmarked %}取消收藏{% else %}收藏{% endif %}
+                    </a>
+                    <a href="{{ url_for('delete_contact', contact_id=contact.id) }}" 
+                       class="btn btn-sm btn-danger"
+                       onclick="return confirm('确定要删除这个联系人吗？')">
+                        删除
+                    </a>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %} 

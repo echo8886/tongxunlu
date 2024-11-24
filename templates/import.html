@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h2>导入联系人</h2>
+<form method="POST" enctype="multipart/form-data">
+    <div class="mb-3">
+        <label class="form-label">选择Excel文件</label>
+        <input type="file" name="file" class="form-control" accept=".xlsx" required>
+    </div>
+    <button type="submit" class="btn btn-primary">导入</button>
+</form>
+
+<div class="mt-4">
+    <h3>导入说明</h3>
+    <p>Excel文件应包含以下列：</p>
+    <ul>
+        <li>姓名（必填）</li>
+        <li>已收藏（可选，填"是"或"否"）</li>
+        <li>电话（可选，多个电话号码用分号分隔）</li>
+        <li>邮箱（可选，多个邮箱用分号分隔）</li>
+        <li>地址（可选，多个地址用分号分隔）</li>
+    </ul>
+</div>
+{% endblock %} 

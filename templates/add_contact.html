@@ -1,0 +1,48 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h2>添加联系人</h2>
+<form method="POST">
+    <div class="mb-3">
+        <label class="form-label">姓名</label>
+        <input type="text" name="name" class="form-control" required>
+    </div>
+
+    <div class="mb-3">
+        <label class="form-label">电话号码</label>
+        <div id="phone-inputs">
+            <input type="tel" name="phone" class="form-control mb-2">
+        </div>
+        <button type="button" class="btn btn-sm btn-secondary" onclick="addInput('phone-inputs', 'phone')">添加更多电话</button>
+    </div>
+
+    <div class="mb-3">
+        <label class="form-label">邮箱</label>
+        <div id="email-inputs">
+            <input type="email" name="email" class="form-control mb-2">
+        </div>
+        <button type="button" class="btn btn-sm btn-secondary" onclick="addInput('email-inputs', 'email')">添加更多邮箱</button>
+    </div>
+
+    <div class="mb-3">
+        <label class="form-label">地址</label>
+        <div id="address-inputs">
+            <input type="text" name="address" class="form-control mb-2">
+        </div>
+        <button type="button" class="btn btn-sm btn-secondary" onclick="addInput('address-inputs', 'address')">添加更多地址</button>
+    </div>
+
+    <button type="submit" class="btn btn-primary">保存</button>
+</form>
+
+<script>
+function addInput(containerId, inputName) {
+    const container = document.getElementById(containerId);
+    const input = document.createElement('input');
+    input.type = inputName === 'email' ? 'email' : 'text';
+    input.name = inputName;
+    input.className = 'form-control mb-2';
+    container.appendChild(input);
+}
+</script>
+{% endblock %} 
